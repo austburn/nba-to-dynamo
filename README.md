@@ -37,12 +37,16 @@ optional arguments:
 ```
 
 ```bash
-$ python fetch_player_id.py --last-name Wall
-[{u'first_name': u'John', u'last_name': u'Wall', u'games_played_flag': True, u'team_abbreviation': u'WAS', u'team_id': Decimal('1610612764'), u'to_year': u'2015', u'from_year': u'2010', u'roster_status': True, u'player_id': Decimal('202322'), u'team_name': u'Wizards', u'team_code': u'wizards', u'player_code': u'john_wall', u'team_city': u'Washington'}]
+$ python fetch_player_id.py --last-name Curry
+[{u'first_name': u'Seth', u'last_name': u'Curry', u'games_played_flag': True, u'team_abbreviation': u'SAC', u'team_id': Decimal('1610612758'), u'to_year': u'2015', u'from_year': u'2013', u'roster_status': True, u'player_id': Decimal('203552'), u'team_name': u'Kings', u'team_code': u'kings', u'player_code': u'seth_curry', u'team_city': u'Sacramento'}, {u'first_name': u'Stephen', u'last_name': u'Curry', u'games_played_flag': True, u'team_abbreviation': u'GSW', u'team_id': Decimal('1610612744'), u'to_year': u'2015', u'from_year': u'2009', u'roster_status': True, u'player_id': Decimal('201939'), u'team_name': u'Warriors', u'team_code': u'warriors', u'player_code': u'stephen_curry', u'team_city': u'Golden State'}]
 
 $ python fetch_player_id.py --first-name Ish
 [{u'first_name': u'Ish', u'last_name': u'Smith', u'games_played_flag': True, u'team_abbreviation': u'PHI', u'team_id': Decimal('1610612755'), u'to_year': u'2015', u'from_year': u'2010', u'roster_status': True, u'player_id': Decimal('202397'), u'team_name': u'76ers', u'team_code': u'sixers', u'player_code': u'ish_smith', u'team_city': u'Philadelphia'}]
 
 $ python fetch_player_id.py --team CLE
 [{u'first_name': u'LeBron', u'last_name': u'James', u'games_played_flag': True, u'team_abbreviation': u'CLE', u'team_id': Decimal('1610612739'), u'to_year': u'2015', u'from_year': u'2003', u'roster_status': True, u'player_id': Decimal('2544'), u'team_name': u'Cavaliers', u'team_code': u'cavaliers', u'player_code': u'lebron_james', u'team_city': u'Cleveland'}, {u'first_name': u'Anderson', u'last_name': u'Varejao', u'games_played_flag': True, u'team_abbreviation': u'CLE', u'team_id': Decimal('1610612739'), u'to_year': u'2015', u'from_year': u'2004', u'roster_status': True, u'player_id': Decimal('2760'), u'team_name': u'Cavaliers', u'team_code': u'cavaliers', u'player_code': u'anderson_varejao', u'team_city': u'Cleveland'}, ... ]
+
+# Combine flags
+$ python fetch_player_id.py --last-name Curry --team GSW
+[{u'first_name': u'Stephen', u'last_name': u'Curry', u'games_played_flag': True, u'team_abbreviation': u'GSW', u'team_id': Decimal('1610612744'), u'to_year': u'2015', u'from_year': u'2009', u'roster_status': True, u'player_id': Decimal('201939'), u'team_name': u'Warriors', u'team_code': u'warriors', u'player_code': u'stephen_curry', u'team_city': u'Golden State'}]
 ```
