@@ -36,6 +36,8 @@ optional arguments:
 
 ```
 
+Different search queries:
+
 ```bash
 $ python fetch_player_id.py --last-name Curry
 [{u'first_name': u'Seth', u'last_name': u'Curry', u'games_played_flag': True, u'team_abbreviation': u'SAC', u'team_id': Decimal('1610612758'), u'to_year': u'2015', u'from_year': u'2013', u'roster_status': True, u'player_id': Decimal('203552'), u'team_name': u'Kings', u'team_code': u'kings', u'player_code': u'seth_curry', u'team_city': u'Sacramento'}, {u'first_name': u'Stephen', u'last_name': u'Curry', u'games_played_flag': True, u'team_abbreviation': u'GSW', u'team_id': Decimal('1610612744'), u'to_year': u'2015', u'from_year': u'2009', u'roster_status': True, u'player_id': Decimal('201939'), u'team_name': u'Warriors', u'team_code': u'warriors', u'player_code': u'stephen_curry', u'team_city': u'Golden State'}]
