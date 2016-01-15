@@ -1,0 +1,17 @@
+{
+    "intents": [
+        {
+            "intent": "GeneralStatsIntent",
+            "slots": [
+                {
+                    "name": "FirstName",
+                    "type": "NBA_FIRST_NAME"
+                },
+                {
+                    "name": "LastName",
+                    "type": "NBA_LAST_NAME"
+                }
+            ]
+        }
+    ]
+}

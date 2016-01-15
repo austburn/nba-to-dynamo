@@ -1,0 +1,15 @@
+{
+  "name": "echo-nba",
+  "version": "1.0.0",
+  "description": "Amazon Echo skill to obtain NBA stats.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "nba",
+    "echo"
+  ],
+  "author": "Austin J. Burnett",
+  "license": "ISC"
+}

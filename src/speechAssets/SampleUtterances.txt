@@ -1,0 +1,1 @@
+GeneralStatsIntent how is {FirstName} {LastName} playing
