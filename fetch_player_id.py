@@ -19,11 +19,11 @@ if args.last_name is None and args.first_name is None and args.team is None:
 
 expressions = []
 if args.last_name:
-    expressions.append(Attr('last_name').eq(args.last_name))
+    expressions.append(Attr('last_name').eq(args.last_name.lower()))
 if args.first_name:
-    expressions.append(Attr('first_name').eq(args.first_name))
+    expressions.append(Attr('first_name').eq(args.first_name.lower()))
 if args.team:
-    expressions.append(Attr('team_abbreviation').eq(args.team))
+    expressions.append(Attr('team_abbreviation').eq(args.team.lower()))
 
 filter_expression = expressions.pop()
 for expression in expressions:
