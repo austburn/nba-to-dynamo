@@ -82,36 +82,3 @@ nba = {
 };
 
 module.exports = nba;
-
-// if (process.argv.length == 2) {
-//   console.log('Last name required... Exiting...');
-// } else {
-//   var lastName, params;
-
-//   lastName = process.argv[2];
-//   params = {
-//     TableName: 'nba',
-//     FilterExpression: 'last_name = :last_name',
-//     ExpressionAttributeValues : {':last_name' : lastName}
-//   };
-
-//   dynamodb.scan(params, function (err, data) {
-//     if (err) {
-//       console.log(err, err.stack);
-//       return;
-//     } else if (data.Count == 0) {
-//       console.log('No player found with name.');
-//       return;
-//     } else {
-//       var id;
-
-//       id = data['Items'][0]['player_id'];
-
-//       var g = function (s) {
-//         console.log(s);
-//       }
-
-//       nba.getGeneralPlayerInfo(id, g);
-//     }
-//   });
-// };
