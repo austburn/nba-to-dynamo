@@ -36,7 +36,8 @@ nba = {
       expAttributeVals[':last_name'] = lastName;
     }
 
-    params['FilterExpression'] = filterExpression.join(' AND ');    params['ExpressionAttributeValues'] = expAttributeVals;
+    params['FilterExpression'] = filterExpression.join(' AND ');
+    params['ExpressionAttributeValues'] = expAttributeVals;
 
     dynamodb.scan(params, function (err, data) {
       if (err) {
