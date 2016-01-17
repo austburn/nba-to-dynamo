@@ -42,6 +42,11 @@ except botocore.exceptions.ClientError:
     #[203112     ,'Acy, Quincy'             ,1             ,'2012'     ,'2015'   ,'quincy_acy',1610612758,'Sacramento','Kings'    ,'SAC'              ,'kings'    ,'Y']
     player_data = data['resultSets'][0]['rowSet']
 
+    def safe_lower(input):
+        if type(input) is str or type(input) is unicode:
+            return input.lower()
+        return input
+
     for player in player_data:
         player_name = player[1].split(',')
         item = {
@@ -69,4 +74,6 @@ except botocore.exceptions.ClientError:
             item['team_abbreviation'] = 'NA'
             item['team_code'] = 'NA'
 
-        nba_table.put_item(Item=item)
+        item_lower = {k: safe_lower(v) for k, v in item.items()}
+
+        nba_table.put_item(Item=item_lower)

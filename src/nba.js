@@ -18,13 +18,9 @@ request = require('request');
 format = require("string-template");
 
 nba = {
-  statsRequest: request.defaults({
-    baseUrl: 'http://stats.nba.com/stats/',
-    json: true
-  }),
   currentSeason: '2015-16',
   leagueId: '00',
-  getPlayerId: function (firstName, lastName) {
+  getPlayerId: function (firstName, lastName, actionCallback, responseCallback) {
     var params, filterExpression, expAttributeVals;
     params = {
       TableName: 'nba'
@@ -32,20 +28,38 @@ nba = {
     filterExpression = [];
     expAttributeVals = {};
     if (firstName) {
-      filterExpression.append('first_name = :first_name');
+      filterExpression.push('first_name = :first_name');
       expAttributeVals[':first_name'] = firstName;
     }
     if (lastName) {
-      filterExpression.append('last_name = :last_name');
+      filterExpression.push('last_name = :last_name');
       expAttributeVals[':last_name'] = lastName;
     }
 
-    params['FilterExpression'] = filterExpression.join(' AND ');
-    params['ExpressionAttributeValues'] = expAttributeVals;
+    params['FilterExpression'] = filterExpression.join(' AND ');    params['ExpressionAttributeValues'] = expAttributeVals;
+
+    dynamodb.scan(params, function (err, data) {
+      if (err) {
+        console.log(err, err.stack);
+        responseCallback('No player found with name.');
+        return;
+      } else if (data.Count == 0) {
+        console.log('No player found with that name.');
+        responseCallback('No player found with that name.');
+        return;
+      } else {
+        var id;
+
+        id = data['Items'][0]['player_id'];
+
+        actionCallback(id, responseCallback);
+      }
+    });
   },
-  getGeneralPlayerInfo: function (id, cb) {
-    this.statsRequest({
-      url: 'commonplayerinfo',
+  getGeneralPlayerInfo: function (id, responseCallback) {
+    request({
+      url: 'http://stats.nba.com/stats/commonplayerinfo',
+      json: true,
       qs: {
         PlayerID: id
       }
@@ -60,42 +74,43 @@ nba = {
           rebounds: playerInfo[5]
         });
 
-        cb(statement);
+        responseCallback(statement);
       }
     });
   }
 };
 
 module.exports = nba;
-if (process.argv.length == 2) {
-  console.log('Last name required... Exiting...');
-} else {
-  var lastName, params;
 
-  lastName = process.argv[2];
-  params = {
-    TableName: 'nba',
-    FilterExpression: 'last_name = :last_name',
-    ExpressionAttributeValues : {':last_name' : lastName}
-  };
+// if (process.argv.length == 2) {
+//   console.log('Last name required... Exiting...');
+// } else {
+//   var lastName, params;
 
-  dynamodb.scan(params, function (err, data) {
-    if (err) {
-      console.log(err, err.stack);
-      return;
-    } else if (data.Count == 0) {
-      console.log('No player found with name.');
-      return;
-    } else {
-      var id;
+//   lastName = process.argv[2];
+//   params = {
+//     TableName: 'nba',
+//     FilterExpression: 'last_name = :last_name',
+//     ExpressionAttributeValues : {':last_name' : lastName}
+//   };
 
-      id = data['Items'][0]['player_id'];
+//   dynamodb.scan(params, function (err, data) {
+//     if (err) {
+//       console.log(err, err.stack);
+//       return;
+//     } else if (data.Count == 0) {
+//       console.log('No player found with name.');
+//       return;
+//     } else {
+//       var id;
 
-      var g = function (s) {
-        console.log(s);
-      }
+//       id = data['Items'][0]['player_id'];
 
-      nba.getGeneralPlayerInfo(id, g);
-    }
-  });
-};
+//       var g = function (s) {
+//         console.log(s);
+//       }
+
+//       nba.getGeneralPlayerInfo(id, g);
+//     }
+//   });
+// };

@@ -21,7 +21,7 @@
 /**
  * App ID for the skill
  */
-var APP_ID = undefined; //replace with "amzn1.echo-sdk-ams.app.[your-unique-value-here]";
+var APP_ID = 'amzn1.echo-sdk-ams.app.3e96d0ee-8709-4864-b156-3886b60b7624'; //replace with "amzn1.echo-sdk-ams.app.[your-unique-value-here]";
 
 /**
  * The AlexaSkill prototype and helper functions
@@ -46,11 +46,15 @@ NbaStats.prototype.constructor = NbaStats;
 NbaStats.prototype.intentHandlers = {
     // register custom intent handlers
     "GeneralStatsIntent": function (intent, session, response) {
-        var firstName, lastName, speechOutput;
-        firstName = intent.slots.FirstName.value;
-        lastName = intent.slots.LastName.value;
+        var firstName, lastName, responseCallback;
+        firstName = intent.slots.FirstName.value.toLowerCase();
+        lastName = intent.slots.LastName.value.toLowerCase();
 
+        responseCallback = function (statement) {
+            response.tell(statement);
+        };
 
+        nba.getPlayerId(firstName, lastName, nba.getGeneralPlayerInfo, responseCallback);
     }
 };
 

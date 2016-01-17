@@ -1,1 +1,2 @@
 GeneralStatsIntent how is {FirstName} {LastName} playing
+GeneralStatsIntent how has {FirstName} {LastName} been playing
