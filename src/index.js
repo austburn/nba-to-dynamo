@@ -44,10 +44,13 @@ NbaStats.prototype = Object.create(AlexaSkill.prototype);
 NbaStats.prototype.constructor = NbaStats;
 
 NbaStats.prototype.intentHandlers = {
-    // register custom intent handlers
     "GeneralStatsIntent": function (intent, session, response) {
         var firstName, lastName, responseCallback;
-        firstName = intent.slots.FirstName.value.toLowerCase();
+
+        firstName = undefined;
+        if (intent.slots.FirstName.value) {
+            firstName = intent.slots.FirstName.value.toLowerCase();
+        }
         lastName = intent.slots.LastName.value.toLowerCase();
 
         responseCallback = function (statement) {

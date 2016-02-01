@@ -1,2 +1,10 @@
 GeneralStatsIntent how is {FirstName} {LastName} playing
+GeneralStatsIntent how {FirstName} {LastName} is playing
 GeneralStatsIntent how has {FirstName} {LastName} been playing
+GeneralStatsIntent how {FirstName} {LastName} has been playing
+GeneralStatsIntent about {FirstName} {LastName}
+GeneralStatsIntent how is {LastName} playing
+GeneralStatsIntent how {LastName} is playing
+GeneralStatsIntent how has {LastName} been playing
+GeneralStatsIntent how {LastName} has been playing
+GeneralStatsIntent about {LastName}

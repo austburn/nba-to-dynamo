@@ -4,16 +4,6 @@ AWS = require('aws-sdk');
 AWS.config.update({region: 'us-east-1'});
 dynamodb = new AWS.DynamoDB.DocumentClient();
 
-// var params = {
-//     TableName: 'nba',
-//     FilterExpression: 'last_name = :last_name',
-//     ExpressionAttributeValues : {':last_name' : 'Wall'}
-// };
-
-// dynamodb.scan(params, function(err, data) {
-//   if (err) console.log(err, err.stack); // an error occurred
-//   else     console.log(data);           // successful response
-// });
 request = require('request');
 format = require("string-template");
 
@@ -48,6 +38,19 @@ nba = {
         console.log('No player found with that name.');
         responseCallback('No player found with that name.');
         return;
+      } else if (data.Count > 1) {
+        var playerList, playerString;
+
+        playerList = data['Items'].map(function (i) {
+          return i['first_name'];
+        });
+
+        playerList.splice(playerList.length - 1, 0, 'and');
+        playerString = playerList.join(', ');
+
+        console.log('Too many players: ' + playerString + ' match your request.');
+        responseCallback('I found these players: ' + playerString + ' with that last name.');
+        return;
       } else {
         var id;
 
@@ -68,7 +71,7 @@ nba = {
       if (!error && response.statusCode == 200) {
         var playerInfo, statement;
         playerInfo = json['resultSets'][1]['rowSet'][0];
-        statement = format('{player} is averaging {points} with {assists} assists and {rebounds} rebounds.', {
+        statement = format('{player} is averaging {points} points with {assists} assists and {rebounds} rebounds.', {
           player: playerInfo[1],
           points: playerInfo[3],
           assists: playerInfo[4],
