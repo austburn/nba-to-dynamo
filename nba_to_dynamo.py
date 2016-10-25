@@ -1,20 +1,26 @@
+#!.env/bin/python
+
 import requests
 import json
-import glob
-import os
+import argparse
 
 import boto3
 import botocore
 
 
+parser = argparse.ArgumentParser(description='Export the nba player ids to dynamo')
+parser.add_argument('--season', required=True, default='2015-16', dest='season', type=str, help='Configure the season timeframe.')
+args = parser.parse_args()
+
 dynamo = boto3.resource('dynamodb')
-nba_table = dynamo.Table('nba')
+table_name = 'nba_{season}'.format(season=args.season)
+nba_table = dynamo.Table(table_name)
 
 try:
     nba_table.creation_date_time
 except botocore.exceptions.ClientError:
     nba_table = dynamo.create_table(
-        TableName='nba',
+        TableName=table_name,
         KeySchema=[
             {
                 'AttributeName': 'player_id',
@@ -32,10 +38,10 @@ except botocore.exceptions.ClientError:
             'WriteCapacityUnits': 5
         }
     )
-    nba_table.meta.client.get_waiter('table_exists').wait(TableName='nba')
+    nba_table.meta.client.get_waiter('table_exists').wait(TableName=table_name)
 
     # Make request
-    req = requests.get('http://stats.nba.com/stats/commonallplayers?LeagueID=00&Season=2015-16&IsOnlyCurrentSeason=1')
+    req = requests.get('http://stats.nba.com/stats/commonallplayers?LeagueID=00&Season={season}&IsOnlyCurrentSeason=1'.format(season=args.season))
     data = json.loads(req.content)
 
     #["PERSON_ID","DISPLAY_LAST_COMMA_FIRST","ROSTERSTATUS","FROM_YEAR","TO_YEAR","PLAYERCODE","TEAM_ID","TEAM_CITY"  ,"TEAM_NAME","TEAM_ABBREVIATION","TEAM_CODE","GAMES_PLAYED_FLAG"]
